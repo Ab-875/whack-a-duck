@@ -2,6 +2,8 @@ function init(){
     // All Code goes here
     const gridElem = document.querySelector('.grid')
     const scoreElem = document.querySelector('#score-display')
+    const audioElem = document.querySelector("#quack")
+
 
     const cells = []
     const gridWidth = 10
@@ -9,28 +11,45 @@ function init(){
 
     let duckPosition = 87
     let score = 0
+    let totalDucks = 0
 
     function addDuck(){
         cells[duckPosition].classList.add('duck')
+        totalDucks++
     }
     
     function removeDuck(){
         cells[duckPosition].classList.remove('duck')
     }
 
+    function endGame(){
+        alert('Game ended, score: ' + score)
+        score = 0
+        scoreElem.textContent = `Your score is 0`
+        totalDucks = 0
+    }
+
     function play(){
         setInterval(() => {
-            removeDuck()
+            if (totalDucks < 10){
+                removeDuck()
             duckPosition = Math.floor(Math.random() * numberOfCells)
-            addDuck()
-        },3000)
+            addDuck() 
+            } else {
+                endGame()
+            }
+           
+        },1000)
     }
     
     function handleClick(event){
         console.log('handle click runs')
         if (event.target.classList.contains('duck')){
+            audioElem.pause()
+            audioElem.currentTime = 0
             score += 100
             scoreElem.textContent = `Your score is ${score}`
+            audioElem.play()
             console.log(score)
         }
     }
