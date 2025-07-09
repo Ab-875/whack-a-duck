@@ -29,6 +29,8 @@ function init(){
         totalDucks = 0
     }
 
+    function placeRandomDuck(){}
+
     function play(){
         setInterval(() => {
             if (totalDucks < 10){
