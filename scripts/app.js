@@ -1,12 +1,14 @@
 function init(){
     // All Code goes here
     const gridElem = document.querySelector('.grid')
+    const scoreElem = document.querySelector('#score-display')
 
     const cells = []
     const gridWidth = 10
     const numberOfCells = gridWidth * gridWidth
 
     let duckPosition = 87
+    let score = 0
 
     function addDuck(){
         cells[duckPosition].classList.add('duck')
@@ -21,7 +23,16 @@ function init(){
             removeDuck()
             duckPosition = Math.floor(Math.random() * numberOfCells)
             addDuck()
-        },1000)
+        },3000)
+    }
+    
+    function handleClick(event){
+        console.log('handle click runs')
+        if (event.target.classList.contains('duck')){
+            score += 100
+            scoreElem.textContent = `Your score is ${score}`
+            console.log(score)
+        }
     }
 
     function createGrid(){
@@ -31,6 +42,7 @@ function init(){
             const cell = document.createElement('div')
             // cell.classList.add('duck')
             cell.textContent = i 
+            cell.addEventListener('click', handleClick)
             cells.push(cell)
             gridElem.appendChild(cell)
         }
